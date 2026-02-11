@@ -288,7 +288,6 @@ fn main() {
                 .to_string()
         }
     };
-
     // --- main libfyaml C build -----------------------------------------
     //
     // Single source of truth: the list of libfyaml src subdirectories
@@ -410,6 +409,9 @@ fn main() {
     build.define("HAVE_STATEMENT_EXPRESSIONS", None);
     build.define("HAVE_GENERIC", None);
     build.define("HAVE_REFLECTION", None);
+    if env::var_os("CARGO_CFG_UNIX").is_some() {
+        build.define("HAVE_QSORT_R", None);
+    }
     build.define("VERSION", format!("{:?}", version).as_str());
     build.compile("fyaml");
 

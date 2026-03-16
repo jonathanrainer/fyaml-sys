@@ -263,6 +263,11 @@ fn main() {
         .prepend_enum_name(false)
         .generate_comments(false)
         .formatter(bindgen::Formatter::Prettyplease)
+        // On ARM64 Linux `char` is unsigned by default, so without this flag
+        // bindgen emits `*const u8` for `const char *` while calling code
+        // expects `*const i8`.  Force signed-char so bindings are consistent
+        // across all targets.
+        .clang_arg("-fsigned-char")
         .generate()
         .unwrap();
 
@@ -392,6 +397,9 @@ fn main() {
     build.flag_if_supported("-Wno-sign-compare");
     build.flag_if_supported("-Wno-missing-field-initializers");
     build.flag_if_supported("-Wno-implicit-fallthrough");
+    // Keep char signedness consistent with the generated bindings (see
+    // -fsigned-char passed to bindgen above).
+    build.flag_if_supported("-fsigned-char");
     // No `HAVE_CONFIG_H`: the libfyaml sources include `config.h` only under
     // `#ifdef HAVE_CONFIG_H`. By leaving it undefined we skip the generated
     // header entirely and let every feature guard fall back to its portable
@@ -429,6 +437,7 @@ fn main() {
     b3.flag_if_supported("-Wno-unused-parameter");
     b3.flag_if_supported("-Wno-sign-compare");
     b3.flag_if_supported("-Wno-unused-but-set-parameter");
+    b3.flag_if_supported("-fsigned-char");
     b3.define("_GNU_SOURCE", None);
     b3.define("HASHER_SUFFIX", "portable");
     b3.define("SIMD_DEGREE", "1");

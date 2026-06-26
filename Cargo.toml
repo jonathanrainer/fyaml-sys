@@ -1,6 +1,6 @@
 [package]
 name = "fyaml-sys"
-version = "0.1.1-alpha.1+fy0.9.3-16-ged4720d"
+version = "0.1.1-alpha.2+fy1.0.0-alpha7"
 authors = ["Valentin Lab <valentin.lab@kalysto.org>", "David Tolnay <dtolnay@gmail.com>"]
 categories = ["api-bindings", "encoding", "parser-implementations"]
 description = "Rust FFI bindings for libfyaml (maintained fork of libfyaml-sys)"

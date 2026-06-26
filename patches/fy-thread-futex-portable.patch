@@ -1,0 +1,26 @@
+--- a/src/thread/fy-thread.c
++++ b/src/thread/fy-thread.c
+@@ -29,7 +29,23 @@
+ 
+ #if defined(__linux__)
+ #include <sys/syscall.h>
++/*
++ * The futex fast-path needs the Linux kernel UAPI header <linux/futex.h>.
++ * Some minimal/cross sysroots (notably several musl cross-toolchains) ship a
++ * Linux target without the kernel UAPI headers, so probe for the header and
++ * fall back to the portable pthread-condvar implementation when it is absent.
++ * Defining FY_THREAD_PORTABLE routes every futex usage site below to its
++ * pthread fallback branch.
++ */
++#if defined(__has_include)
++#if __has_include(<linux/futex.h>)
+ #include <linux/futex.h>
++#else
++#define FY_THREAD_PORTABLE
++#endif
++#else
++#include <linux/futex.h>
++#endif
+ #endif
+ 
+ #include "fy-win32.h"

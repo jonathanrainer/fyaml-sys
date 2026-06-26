@@ -20,7 +20,7 @@ This crate is a maintained fork of [libfyaml-sys](https://crates.io/crates/libfy
 originally created by [David Tolnay](https://github.com/dtolnay). The original
 repository was [archived](https://github.com/dtolnay/libfyaml-rs) in December 2024.
 
-This fork continues maintenance to support newer libfyaml versions (0.9.x).
+This fork continues maintenance to support newer libfyaml versions (1.0.x).
 
 ## License
 

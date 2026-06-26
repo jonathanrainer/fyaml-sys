@@ -10,7 +10,7 @@
 //! originally created by [David Tolnay](https://github.com/dtolnay). The original
 //! repository was [archived](https://github.com/dtolnay/libfyaml-rs) in December 2024.
 
-#![doc(html_root_url = "https://docs.rs/fyaml-sys/0.1.1-alpha.1+fy0.9.3-16-ged4720d")]
+#![doc(html_root_url = "https://docs.rs/fyaml-sys/0.1.1-alpha.2+fy1.0.0-alpha7")]
 #![allow(
     improper_ctypes,
     non_camel_case_types,

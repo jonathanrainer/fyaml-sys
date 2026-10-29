@@ -238,6 +238,15 @@ fn main() {
         .allowlist_function("fy_.*")
         .allowlist_type("fy_.*");
 
+    // On Linux, bindgen's default of scraping include paths from a separate
+    // `clang` binary can mix resource dirs from different clang versions
+    // (e.g. Ubuntu 26.04 ships clang 20-22), which breaks clang's
+    // include_next-based <stdatomic.h>. libclang finds its own resource dir
+    // fine there; macOS needs the scraped SDK paths.
+    if env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("linux") {
+        bindings = bindings.detect_include_paths(false);
+    }
+
     // Variadic functions that use `va_list`.
     // Blocked on https://github.com/rust-lang/rust/issues/44930.
     let all_function_names = function_names(Path::new("libfyaml/include"));
